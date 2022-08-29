@@ -7,7 +7,10 @@ const Login = () => {
   const [id, setId] = useState("");
   const [pass, setPass] = useState("");
 
-  console.log(id + pass);
+
+  const handleClick = () => {
+    console.log(id + pass);
+  }
   return (
     <>
       <div id="background"></div>
@@ -35,7 +38,7 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" href="./dashboard">
+            <Button variant="primary" type="submit" onClick={() => handleClick()}>
               Login
             </Button>
           </Form>
