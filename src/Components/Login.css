@@ -1,0 +1,44 @@
+#background {
+  position: fixed;
+  width: 30%;
+  height: 100%;
+  background-color: #ef2a26;
+  z-index: -1;
+}
+
+.float-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: auto;
+  width: 70%;
+  height: 70vh;
+  margin: auto;
+  background-color: pink;
+}
+
+.float-child {
+  height: 100%;
+  width: 50%;
+  float: left;
+  padding: 20px;
+  justify-content: center;
+}
+
+.login-h1 {
+  display: flex;
+  align-items: center;
+}
+
+.login-h1-text {
+  color: #ef2a26;
+  font-size: 5em;
+  text-align: center;
+}
+
+
+.logo-login {
+  display: block;
+  margin: auto;
+}

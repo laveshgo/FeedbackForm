@@ -1,0 +1,25 @@
+.link {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #FFF;
+}
+
+
+.hr-css {
+    border: 2px solid red;
+    margin: 30px auto;
+    width: 80%;
+}
+
+/* 
+.float-child {
+    height: 100%;
+    width: 50%;
+    float: left;
+    padding: 20px;
+    justify-content: center;
+  }
+   */

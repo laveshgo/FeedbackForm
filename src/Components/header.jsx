@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../Images/Logo.png";
 import Button from "react-bootstrap/Button";
+import "./header.css";
 
 function Header() {
   return (
@@ -13,7 +14,7 @@ function Header() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto" z>
+          <Nav className="me-auto">
             <Nav.Link href="./dashboard">
               <Button variant="primary">Home</Button>
             </Nav.Link>
