@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import Header from "./header";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import {  Link } from "react-router-dom";
+import {  Link, Navigate , Routes,Route,useNavigate} from "react-router-dom";
 import "./dashboard.css";
+import withRouter from "./withRouter.jsx";
+import FillResponse from "./FillResponse";
+import ViewResponses from './ViewResponses.jsx'
+
 
 class Dashbaord extends Component {
   constructor(props) {
@@ -18,8 +22,22 @@ class Dashbaord extends Component {
         { id: 1, description: "Form 1", status: "Fill Response" },
         { id: 2, description: "Form 2", status: "Fill Response" },
         { id: 3, description: "Form 3", status: "Fill Response" },
+        { id: 4, description: "Form 3", status: "Fill Response" }
       ],
     };
+    this.fillResponse=this.fillResponse.bind(this)
+  }
+
+  // const navigate=useNavigate();
+
+  fillResponse(param){
+    console.log(param)
+    // this.navigate('/fill-response')
+
+    // this.props.navigation.navigate('dashboard')
+
+    // console.log("fill response clicked")
+    // this.props.navigate("/fill-response");
   }
 
   render() {
@@ -52,7 +70,7 @@ class Dashbaord extends Component {
                   <tr>
                     <td>{formByYou.description}</td>
                     <td>
-                      <Button variant="primary">{formByYou.status}</Button>
+                      <Button variant="primary" href='./view-responses'>{formByYou.status}</Button>
                     </td>
                   </tr>
                 ))}
@@ -71,12 +89,17 @@ class Dashbaord extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.formsForYou.map((formForYou) => (
+                {this.state.formsForYou.map((formForYou,index) => (
                   <tr>
                     <td>{formForYou.description}</td>
                     <td>
-                      <Button variant="primary">{formForYou.status}</Button>
+                      <Button key={index} variant="primary" onClick={()=>this.fillResponse(formForYou)} href="/fill-response" >{formForYou.status}</Button>
                     </td>
+                    {/* <td>
+                      <ul>
+                        <li key={key}>{formForYou.id}</li>
+                      </ul>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
@@ -88,4 +111,4 @@ class Dashbaord extends Component {
   }
 }
 
-export default Dashbaord;
+export default withRouter(Dashbaord);
