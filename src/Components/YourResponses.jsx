@@ -2,8 +2,13 @@ import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import { Box, Grid, Paper } from "@mui/material";
 import React from "react";
 import Header from "./header";
+import useQuery from "./useQuery";
 
 function YourResponses() {
+  const query = useQuery();
+  const user_id = query.get("user_id") || "";
+  const form_id = query.get("form_id") || "";
+
   let Questions = [
     {
       id: "d61033d-e548-2bde-633-74f0b42a2ae",
@@ -54,6 +59,7 @@ function YourResponses() {
 
   return (
     <>
+      {console.log("userID = " + user_id + " formID = " + form_id)}
       <div id="form-create">
         <Header />
         <div className="h1-div">
@@ -64,7 +70,7 @@ function YourResponses() {
           {Questions.map((que) => {
             if (que.type === "text")
               return (
-                <Grid item md={8}>
+                <Grid item md={8} key={que.id}>
                   <Paper elevation={1}>
                     <Box sx={{ p: 3 }}>
                       <Grid container spacing={1}>
@@ -81,7 +87,7 @@ function YourResponses() {
               );
             else
               return (
-                <Grid item md={8}>
+                <Grid item md={8} key={que.id}>
                   <Paper elevation={1}>
                     <Box sx={{ p: 3 }}>
                       <Grid container spacing={1}>
@@ -93,13 +99,13 @@ function YourResponses() {
                                 let ans = LookAnswer(que.id);
                                 if (item.id === ans)
                                   return (
-                                    <p>
+                                    <p key={item.id}>
                                       <RadioButtonChecked /> {item.value}
                                     </p>
                                   );
                                 else
                                   return (
-                                    <p>
+                                    <p key={item.id}>
                                       <RadioButtonUnchecked /> {item.value}
                                     </p>
                                   );

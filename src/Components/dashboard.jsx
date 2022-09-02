@@ -46,7 +46,7 @@ class Dashbaord extends Component {
         <div>
           <h1>Hello User</h1>
           <Button variant="primary">
-            <Link className="link" to="/create-form">
+            <Link className="link" to={"/create-form?user_id=" + "5"}>
               Create a Form
             </Link>
           </Button>
@@ -68,7 +68,7 @@ class Dashbaord extends Component {
                   <tr key={formByYou.id}>
                     <td>{formByYou.description}</td>
                     <td>
-                      <Button variant="primary" href="./view-responses">
+                      <Button variant="primary" href={"./view-responses?form_id="+formByYou.id} >
                         {formByYou.status}
                       </Button>{" "}
                     </td>
@@ -98,7 +98,7 @@ class Dashbaord extends Component {
                           key={index}
                           variant="success"
                           onClick={() => this.fillResponse(formForYou)}
-                          href="/your-responses"
+                          href={"/your-responses?user_id=" +  formForYou.id + "&form_id=" + formForYou.id }
                         >
                           View Response
                         </Button>{" "}
@@ -112,7 +112,7 @@ class Dashbaord extends Component {
                           key={index}
                           variant="primary"
                           onClick={() => this.fillResponse(formForYou)}
-                          href="/fill-response"
+                          href={"/fill-response?user_id=" +  formForYou.id + "&form_id=" + formForYou.id }
                         >
                           Fill Response
                         </Button>{" "}

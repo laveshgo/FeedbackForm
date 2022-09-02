@@ -10,8 +10,12 @@ import TextFieldInput from "./elements/TextField";
 import RadioInput from "./elements/Radioinput";
 import { formEl } from "./constants";
 import { AddCircleOutlineOutlined } from "@mui/icons-material";
+import useQuery from "./useQuery";
 
 function CreateForm() {
+  const query = useQuery();
+  const user_id = query.get("user_id") || "";
+
   const [data, setData] = useState([]);
   const [formData, setFormData] = useState("text");
   const items = data;
