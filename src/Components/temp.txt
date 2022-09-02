@@ -1,0 +1,299 @@
+
+
+  import React, { useState } from "react";
+import "./Question-form.css";
+import { Accordion, AccordionSummary, Typography } from "@mui/material";
+import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
+import { color } from "@mui/system";
+
+function QuestionForm() {
+  const [questions, setQuestions] = useState(
+    [{questionText: "Name of  Question" ,
+    questionType: "radio",
+    options: [
+      { optionText: "aAA" },
+      { optionText: "bbb" },
+      { optionText: "ccc" },
+      { optionText: "ddd" }
+    ],
+    open: true,
+    required: false }]
+    )
+
+  function questionsUI() {
+    return questions.map((ques, i) => (
+      <div>
+        <Accordion expanded={questions[i].open}
+        className={questions[i].open ? "add_border" : ""}>
+          <AccordionSummary
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            elevation={1}
+            style={{ width: "100%" }}
+          >
+          { questions[i].open ? (
+
+            <div className="saved_questions">
+            <Typography style={{fontSize : "15px",
+            fontWeight:"400",
+            letterSpacing:".1px",
+            lineHeight:"24px",
+            paddingBottom:"8px"
+            }}>
+              {i+1}.{questions[i].questionText}</Typography>
+
+              {ques.options.map((op,j) => (
+              <div key={j}>
+                <div style={{display : "flex"}}>
+                  <FormCheckLabel style={{marginLeft :"5px"}}
+                   disabled control={<input type={ques.questionType}
+                     style={{marginRight : "3px"}}
+                    required={ques.type} />} label = {
+                      
+                      <Typography  
+                      >{ques.options[j].optionText}</Typography>
+                    }/>
+                </div>
+
+              </div>
+          ))}
+            
+
+            </div>
+          ):""}
+
+
+          </AccordionSummary>
+          
+        </Accordion>
+      </div>
+    ));
+  }
+  return (
+    <>
+      <div className="question-form">
+        <br />
+        <div className="section">
+          <div className="question_title_section">
+            <div className="question-form-top">
+              <input
+                type="text"
+                className="question_form_top_name"
+                style={{ color: "black" }}
+                placeholder="untitled document"
+              />
+              <input
+                type="text"
+                className="question_form_top_desc"
+                placeholder="form description"
+              />
+            </div>
+          </div>
+
+          {questionsUI()}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default QuestionForm;
+
+
+
+import React, { Component } from "react";
+import Header from "./header";
+import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import "./createform.css";
+
+class CreateForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      form_name: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  ProceedClicked() {
+    console.log("I am Clicked");
+  }
+
+  render() {
+    return (
+      <div id="form-create">
+        <Header />
+
+        <div className="h1-div">
+          <h1>Create Form</h1>
+        </div>
+
+        <div className="form-details">
+          <Form>
+            <Form.Group className="mb-3 ">
+              <Form.Label>Your Name</Form.Label>
+              <Form.Control
+                name="name"
+                onChange={this.handleChange}
+                placeholder="Enter your name"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Form Name</Form.Label>
+              <Form.Control
+                name="form_name"
+                onChange={this.handleChange}
+                required
+                placeholder="Enter the name of the form "
+              />
+            </Form.Group>
+
+            <Button variant="primary" onClick={this.ProceedClicked}>
+              Proceed
+            </Button>
+          </Form>
+        </div>
+      </div>
+    );
+  }
+}
+export default CreateForm;
+
+import { DeleteOutlineOutlined } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  FormGroup,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Tooltip,
+} from "@mui/material";
+import uuid from "react-uuid";
+
+import { formEl } from "../constants";
+
+const RadioInput = ({
+  item,
+  handleValue,
+  deleteEl,
+  handleElType,
+  addOption,
+  handleOptionValues,
+  deleteOption,
+}) => {
+
+
+const createNewOption = (id) => {
+    console.log(id,typeof(id),"this is id")
+    const data = {
+      id: uuid(),
+      value: "",
+    };
+    addOption(id, data);
+  };
+
+
+  return (
+    <>
+      <Paper elevation={1}>
+        <Box sx={{ p: 3 }}>
+          <Grid container spacing={1}>
+            <Grid item xs={9}>
+              <TextField
+                value={item.value}
+                variant="outlined"
+                onChange={(e) => handleValue(item.id, e)}
+                fullWidth
+                required={item.required}
+                placeholder="Textfield Label"
+                sx={{ mb: 2 }}
+              />
+              {item.options &&
+                item.options.length > 0 &&
+                item.options.map((opt, key) => (
+                  <Box sx={{ display: "flex" }}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      placeholder={`Radio Option ${key + 1}`}
+                      defaultValue={opt?.value}
+                      key={opt?.id}
+                      sx={{ mb: 1 }}
+                      onBlur={(e) =>
+                        handleOptionValues(item?.id, opt?.id, e.target.value)
+                      }
+                    />
+                    <Tooltip title="Delete Option" aria-label="delete-option">
+                      <IconButton
+                        aria-label="delete-option"
+                        onClick={() => deleteOption(item.id, opt?.id)}
+                        sx={{ ml: 2 }}
+                      >
+                        {/* <DeleteOutlineOutlinedIcon color="secondary" /> */}
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                ))}
+              <Button variant="text" onClick={() => createNewOption(item.id)}>
+                Add Option
+              </Button>
+            </Grid>
+
+            <Grid item xs={3}>
+              <FormControl fullWidth>
+                <InputLabel id="el-type-label">Type</InputLabel>
+                <Select
+                  labelId="el-type-label"
+                  id="el-type"
+                  label="Type"
+                  value={item.type}
+                  onChange={(e) => handleElType(item.id, e.target.value)}
+                >
+                  {formEl &&
+                    formEl.map((el, key) => (
+                      <MenuItem key={key} value={el.value}>
+                        {el.label}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Divider light />
+        <FormGroup row sx={{ alignItems: "center" }}>
+          <Tooltip title="Delete Element" aria-label="delete-element">
+            <IconButton
+              aria-label="delete-element"
+              onClick={() => deleteEl(item.id)}
+              sx={{ ml: 2 }}
+            >
+            
+              <DeleteOutlineOutlined color="secondary" />
+            </IconButton>
+          </Tooltip>
+        </FormGroup>
+      </Paper>
+    </>
+  );
+};
+
+export default RadioInput;
