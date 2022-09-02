@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import Header from "./header";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import {  Link, Navigate , Routes,Route,useNavigate} from "react-router-dom";
 import "./dashboard.css";
 import withRouter from "./withRouter.jsx";
+import FillResponse from "./FillResponse";
+import ViewResponses from './ViewResponses.jsx'
 
 class Dashbaord extends Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class Dashbaord extends Component {
         { id: 1, description: "Form 1", filled: true },
         { id: 2, description: "Form 2", filled: false },
         { id: 3, description: "Form 3", filled: true },
-        { id: 4, description: "Form 3", filled: false },
+        { id: 4, description: "Form 4", filled: false },
       ],
     };
     this.fillResponse = this.fillResponse.bind(this);
