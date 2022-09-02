@@ -8,7 +8,6 @@ import withRouter from "./withRouter.jsx";
 import FillResponse from "./FillResponse";
 import ViewResponses from './ViewResponses.jsx'
 
-
 class Dashbaord extends Component {
   constructor(props) {
     super(props);
@@ -19,19 +18,19 @@ class Dashbaord extends Component {
         { id: 3, description: "Form 3", status: "View" },
       ],
       formsForYou: [
-        { id: 1, description: "Form 1", status: "Fill Response" },
-        { id: 2, description: "Form 2", status: "Fill Response" },
-        { id: 3, description: "Form 3", status: "Fill Response" },
-        { id: 4, description: "Form 3", status: "Fill Response" }
+        { id: 1, description: "Form 1", filled: true },
+        { id: 2, description: "Form 2", filled: false },
+        { id: 3, description: "Form 3", filled: true },
+        { id: 4, description: "Form 4", filled: false },
       ],
     };
-    this.fillResponse=this.fillResponse.bind(this)
+    this.fillResponse = this.fillResponse.bind(this);
   }
 
   // const navigate=useNavigate();
 
-  fillResponse(param){
-    console.log(param)
+  fillResponse(param) {
+    console.log(param);
     // this.navigate('/fill-response')
 
     // this.props.navigation.navigate('dashboard')
@@ -39,7 +38,6 @@ class Dashbaord extends Component {
     // console.log("fill response clicked")
     // this.props.navigate("/fill-response");
   }
-
   render() {
     return (
       <>
@@ -67,10 +65,12 @@ class Dashbaord extends Component {
               </thead>
               <tbody>
                 {this.state.formsCreatedByYou.map((formByYou) => (
-                  <tr>
+                  <tr key={formByYou.id}>
                     <td>{formByYou.description}</td>
                     <td>
-                      <Button variant="primary" href='./view-responses'>{formByYou.status}</Button>
+                      <Button variant="primary" href="./view-responses">
+                        {formByYou.status}
+                      </Button>{" "}
                     </td>
                   </tr>
                 ))}
@@ -89,19 +89,37 @@ class Dashbaord extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.formsForYou.map((formForYou,index) => (
-                  <tr>
-                    <td>{formForYou.description}</td>
-                    <td>
-                      <Button key={index} variant="primary" onClick={()=>this.fillResponse(formForYou)} href="/fill-response" >{formForYou.status}</Button>
-                    </td>
-                    {/* <td>
-                      <ul>
-                        <li key={key}>{formForYou.id}</li>
-                      </ul>
-                    </td> */}
-                  </tr>
-                ))}
+                {this.state.formsForYou.map((formForYou, index) => {
+                  return formForYou.filled ? (
+                    <tr key={formForYou.id}>
+                      <td>{formForYou.description}</td>
+                      <td>
+                        <Button
+                          key={index}
+                          variant="success"
+                          onClick={() => this.fillResponse(formForYou)}
+                          href="/your-responses"
+                        >
+                          View Response
+                        </Button>{" "}
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr key={formForYou.id}>
+                      <td>{formForYou.description}</td>
+                      <td>
+                        <Button
+                          key={index}
+                          variant="primary"
+                          onClick={() => this.fillResponse(formForYou)}
+                          href="/fill-response"
+                        >
+                          Fill Response
+                        </Button>{" "}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           </div>
