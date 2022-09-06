@@ -8,15 +8,17 @@ import withRouter from "./withRouter.jsx";
 import FillResponse from "./FillResponse";
 import ViewResponses from "./ViewResponses.jsx";
 import { Grid } from "@mui/material";
+import DataService from "./api/DataService";
 
 class Dashbaord extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user_id: 4,
       formsCreatedByYou: [
-        { id: 1, description: "Form 1", status: "View" },
-        { id: 2, description: "Form 2", status: "View" },
-        { id: 3, description: "Form 3", status: "View" },
+        // { id: 1, description: "Form 1", status: "View" },
+        // { id: 2, description: "Form 2", status: "View" },
+        // { id: 3, description: "Form 3", status: "View" },
       ],
       formsForYou: [
         { id: 1, description: "Form 1", filled: true },
@@ -39,7 +41,22 @@ class Dashbaord extends Component {
     // console.log("fill response clicked")
     // this.props.navigate("/fill-response");
   }
-  render() {
+
+  componentDidMount(){
+    DataService.dashboardCreatedByForms(this.user_id)
+    .then()
+
+  }
+
+  // viewFormCreatedByYou(){
+  //   DataService.dashboardCreatedByForms(this.state.user_id)
+  //   .then(response => {
+
+  //     console.log(response);
+  //   })
+  // }
+
+  render() { 
     return (
       <>
         <Header />
@@ -74,6 +91,7 @@ class Dashbaord extends Component {
                     <td>{formByYou.description}</td>
                     <td>
                       <Button
+                        onClick={this.viewFormCreatedByYou}
                         variant="primary"
                         href={"./view-responses?form_id=" + formByYou.id}
                       >

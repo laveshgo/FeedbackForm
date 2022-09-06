@@ -4,6 +4,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Logo from "../Images/Logo.png";
 import Button from "react-bootstrap/Button";
 import "./header.css";
+import AuthenticationService from "./AuthenticationService.js";
+
 
 function Header() {
   return (
@@ -18,8 +20,8 @@ function Header() {
             <Nav.Link href="./dashboard">
               <Button variant="primary">Home</Button>
             </Nav.Link>
-            <Nav.Link href="/login">
-              <Button variant="primary">LogOut</Button>
+            <Nav.Link href='./login'>
+              <Button onClick={AuthenticationService.logout} variant="primary">LogOut</Button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
@@ -29,3 +31,4 @@ function Header() {
 }
 
 export default Header;
+ 
