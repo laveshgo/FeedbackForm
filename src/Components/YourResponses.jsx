@@ -1,83 +1,125 @@
 import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import { Box, Grid, Paper } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./header";
 import useQuery from "./useQuery";
+import axios from "axios";
 
 function YourResponses() {
   const query = useQuery();
   const user_id = query.get("user_id") || "";
   const form_id = query.get("form_id") || "";
 
+  // const url1 =
+  //   "/viewresponse?response_id=65";
+
+  // const [Questions, setQuestions] = useState(null);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(url1)
+  //     .then((response) => {
+  //       setQuestions(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error);
+  //     });
+
+  // }, [url1]);
+
+  // if (error) return `Error: ${error.message}`;
+
+  // if (!Questions ) return null;
+
   let Questions = [
     {
-      id: "d61033d-e548-2bde-633-74f0b42a2ae",
-      value: "Question 1",
-      type: "text",
+      question_id: 59,
+      answer: "Motam Shiva Teja",
+      options: [],
+      questionType: "SUBJECTIVE",
+      questionText: "What is your name?",
     },
     {
-      id: "7167b4a-f703-1024-3a22-a2dbcb7db53b",
-      value: "Question 2",
-      type: "radio",
+      question_id: 60,
+      answer: "Dhanush",
+      options: [],
+      questionType: "SUBJECTIVE",
+      questionText: "What is your Supervisor's Name?",
+    },
+    {
+      question_id: 61,
+      answer: "Slightly",
+      options: ["Not at all", "Slightly", "Moderately", "Extremely"],
+      questionType: "OBJECTIVE",
+      questionText: "Do you prefer working at the office instead??",
+    },
+    {
+      question_id: 62,
+      answer: "Not at all",
+      options: ["Not at all", "Slightly", "Moderately", "Extremely"],
+      questionType: "OBJECTIVE",
+      questionText: "Do you recommend remote working to your friends?",
+    },
+    {
+      question_id: 63,
+      answer: "Moderately",
+      options: ["Not at all", "Slightly", "Moderately", "Extremely"],
+      questionType: "OBJECTIVE",
+      questionText: "Do you think remote working has affected you positively?",
+    },
+    {
+      question_id: 64,
+      answer: "1 year",
       options: [
-        {
-          id: "1",
-          value: "Option 1",
-        },
-        {
-          id: "2",
-          value: "Option 2",
-        },
-        {
-          id: "3",
-          value: "Option 3",
-        },
-        {
-          id: "4",
-          value: "Option 4",
-        },
+        "Less than 1 month",
+        "1-6 months",
+        "1 year",
+        "More than 1 year",
       ],
+      questionType: "OBJECTIVE",
+      questionText: "How long do you work remotely?",
     },
   ];
-  let Answers = [
-    {
-      id: "d61033d-e548-2bde-633-74f0b42a2ae",
-      answer: "This is a answer",
-    },
-    {
-      id: "7167b4a-f703-1024-3a22-a2dbcb7db53b",
-      answer: "3",
-    },
-  ];
-
-  function LookAnswer(id) {
-    let ans = Answers.find((ans) => {
-      return ans.id === id;
-    });
-    return ans.answer;
-  }
 
   return (
     <>
       {console.log("userID = " + user_id + " formID = " + form_id)}
+      {console.log(Questions)}
       <div id="form-create">
         <Header />
         <div className="h1-div">
           <h1>Your Responses</h1>
         </div>
 
-        <Grid container spacing={1} direction="row" justifyContent="center">
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          justifyContent="center"
+          style={{ paddingBottom: "100px" }}
+        >
           {Questions.map((que) => {
-            if (que.type === "text")
+            if (que.questionType === "SUBJECTIVE")
               return (
                 <Grid item md={8} key={que.id}>
                   <Paper elevation={1}>
                     <Box sx={{ p: 3 }}>
                       <Grid container spacing={1}>
                         <Grid item xs={9}>
-                          <p>{que.value}</p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Question:{" "}
+                            </span>
+                            {que.questionText}
+                          </p>
                           <Box sx={{ display: "flex" }}>
-                            <p>{LookAnswer(que.id)}</p>
+                            <p>
+                              <span style={{ fontWeight: "bold" }}>
+                                Answer:{" "}
+                              </span>
+                              {que.answer}
+                            </p>
                           </Box>
                         </Grid>
                       </Grid>
@@ -92,21 +134,27 @@ function YourResponses() {
                     <Box sx={{ p: 3 }}>
                       <Grid container spacing={1}>
                         <Grid item xs={9}>
-                          <p>{que.value}</p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Question:{" "}
+                            </span>
+                            {que.questionText}
+                          </p>
                           <Box sx={{ display: "flex" }}>
+                            <span style={{ fontWeight: "bold" }}>Answer: </span>
+
                             <ul>
                               {que.options.map((item) => {
-                                let ans = LookAnswer(que.id);
-                                if (item.id === ans)
+                                if (item === que.answer)
                                   return (
                                     <p key={item.id}>
-                                      <RadioButtonChecked /> {item.value}
+                                      <RadioButtonChecked /> {item}
                                     </p>
                                   );
                                 else
                                   return (
                                     <p key={item.id}>
-                                      <RadioButtonUnchecked /> {item.value}
+                                      <RadioButtonUnchecked /> {item}
                                     </p>
                                   );
                               })}

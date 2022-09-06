@@ -25,29 +25,27 @@ const RadioInput = ({
 }) => {
   return (
     <>
-      <Paper elevation={1}>
+      <Paper elevation={1} style={{ marginBottom: "10px" }}>
         <Box sx={{ p: 3 }}>
           <Grid container spacing={1}>
             <Grid item xs={9}>
               <TextField
                 value={item.value}
-                variant="outlined"
+                label="Enter Question"
                 onChange={(e) => handleValue(item.id, e)}
                 fullWidth
                 required={item.required}
-                placeholder="Textfield Label"
                 sx={{ mb: 2 }}
               />
-              {item.optionss &&
-                item.optionss.length > 0 &&
-                item.optionss.map((opt, key) => (
-                  <Box sx={{ display: "flex" }}>
+              {item.options &&
+                item.options.length > 0 &&
+                item.options.map((opt, key) => (
+                  <Box sx={{ display: "flex" }} key={opt?.id}>
                     <TextField
-                      variant="outlined"
+                      label={` Option ${key + 1}`}
                       fullWidth
-                      placeholder={`Radio Option ${key + 1}`}
                       defaultValue={opt?.value}
-                      key={opt?.id}
+                      required={item.required}
                       sx={{ mb: 1 }}
                       onBlur={(e) =>
                         handleOptionValues(item?.id, opt?.id, e.target.value)

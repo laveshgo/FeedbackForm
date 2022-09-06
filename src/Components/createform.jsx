@@ -11,23 +11,28 @@ import RadioInput from "./elements/Radioinput";
 import { formEl } from "./constants";
 import { AddCircleOutlineOutlined } from "@mui/icons-material";
 import useQuery from "./useQuery";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CreateForm() {
   const query = useQuery();
   const user_id = query.get("user_id") || "";
 
-  const [data, setData] = useState([]);
-  const [formData, setFormData] = useState("text");
-  const items = data;
+  const url = "https://6312412eb466aa9b0387361b.mockapi.io/qanda";
 
+  const [formName, setFormName] = useState("");
+  const [data, setData] = useState([]);
+  const [formData, setFormData] = useState("SUBJECTIVE");
+  const items = data;
+  const postData = [];
   const addElement = () => {
     const initVal = formEl[0]?.value;
 
     const data = {
       id: uuid(),
-      value: null,
+      value: "",
       type: formData,
-      optionss: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+      options: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
     };
     setData((prevState) => [...prevState, data]);
     setFormData(initVal);
@@ -59,23 +64,11 @@ function CreateForm() {
     setData(newArr);
   };
 
-  // const addOption = (id, newOption) => {
-  //   let newArr = data.map((el) => {
-  //     if (el.id === id) {
-  //       const objVal = "options" in el ? el?.options : [];
-  //       return { ...el, options: [...objVal, newOption] };
-  //     } else {
-  //       return el;
-  //     }
-  //   });
-  //   setData(newArr);
-  // };
-
   const handleOptionValues = (elId, optionId, optionVal) => {
     let newArr = data.map((el) => {
       if (el.id === elId) {
-        el?.optionss &&
-          el?.optionss.map(function (opt) {
+        el?.options &&
+          el?.options.map(function (opt) {
             return opt.id === optionId ? (opt.value = optionVal) : "";
           });
         return el;
@@ -86,26 +79,13 @@ function CreateForm() {
     setData(newArr);
   };
 
-  // const deleteOption = (elId, optionId) => {
-  //   let newArr = data.map((el) => {
-  //     if (el.id === elId) {
-  //       let newOptions =
-  //         el?.options && el?.options.filter((opt) => opt.id !== optionId);
-  //       return { ...el, options: newOptions };
-  //     } else {
-  //       return el;
-  //     }
-  //   });
-  //   setData(newArr);
-  // };
-
   const handleOnChangeSort = ({ items }) => {
     setData(items);
   };
 
   const renderElements = ({ item }) => {
     switch (item.type) {
-      case "text":
+      case "SUBJECTIVE":
         return (
           <TextFieldInput
             item={item}
@@ -114,27 +94,46 @@ function CreateForm() {
             handleElType={handleElType}
           />
         );
-      case "radio":
+      case "OBJECTIVE":
         return (
           <RadioInput
             item={item}
             handleValue={handleValue}
             deleteEl={deleteEl}
             handleElType={handleElType}
-            // addOption={addOption}
             handleOptionValues={handleOptionValues}
-            // deleteOption={deleteOption}
           />
         );
       default:
         return <></>;
     }
   };
+  const navigate = useNavigate();
+
+  const passData = () => {
+    data.map((d) => {
+      return postData.push({
+        text: d.value,
+        question_type: d.type,
+        answers: [
+          d.options[0].value,
+          d.options[1].value,
+          d.options[2].value,
+          d.options[3].value,
+        ],
+      });
+    });
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
+    passData();
 
-    console.log(data);
+    axios.post(url, {
+      name: formName,
+      questions: postData,
+    });
+    navigate("/dashboard");
   }
 
   return (
@@ -143,19 +142,25 @@ function CreateForm() {
       <div className="h1-div">
         <h1>Create Form</h1>
       </div>
-      {/* <div className="form-details"> */}
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3 ">
-          <Form.Label>Your Name</Form.Label>
-          <Form.Control required placeholder="Enter name" />
-        </Form.Group>
+        <div className="form-details">
+          <Form.Group className="mb-3 ">
+            <Form.Label>Form Name</Form.Label>
+            <Form.Control
+              value={formName}
+              onChange={(e) => setFormName(e.target.value)}
+              required
+              placeholder="Enter name"
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Form Name</Form.Label>
-          <Form.Control required placeholder="Enter the name of the form " />
-        </Form.Group>
-
-        <Form.Group>
+          {data.length < 1 ? (
+            <Button onClick={addElement}>Add Questions</Button>
+          ) : (
+            <></>
+          )}
+        </div>
+        <Form.Group required>
           <Grid container spacing={1} direction="row" justifyContent="center">
             <Grid item md={6}>
               <Nestable
@@ -166,24 +171,29 @@ function CreateForm() {
               />
             </Grid>
 
-            <Grid item md={1}>
+            <Grid item>
               <Tooltip title="Add Element" aria-label="add-element">
-                <IconButton
-                  aria-label="add-element"
-                  onClick={addElement}
-                  sx={{ position: "sticky", top: 30 }}
-                >
-                  <AddCircleOutlineOutlined color="secondary" />
-                </IconButton>
+                {data.length > 0 ? (
+                  <IconButton
+                    aria-label="add-element"
+                    onClick={addElement}
+                    sx={{ position: "sticky", top: 30 }}
+                  >
+                    <AddCircleOutlineOutlined color="secondary" />
+                  </IconButton>
+                ) : (
+                  <></>
+                )}
               </Tooltip>
             </Grid>
           </Grid>
         </Form.Group>
-        <Button disabled={data.length < 1} variant="primary" type="submit">
-          Proceed
-        </Button>
+        <div className="form-details">
+          <Button disabled={data.length < 1} variant="primary" type="submit">
+            Proceed
+          </Button>
+        </div>
       </Form>{" "}
-      {/* </div> */}
     </div>
   );
 }
