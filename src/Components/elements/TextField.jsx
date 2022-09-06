@@ -19,7 +19,7 @@ import { formEl } from "../constants";
 const TextFieldInput = ({ item, handleValue, deleteEl, handleElType }) => {
   return (
     <>
-      <Paper elevation={1}>
+      <Paper elevation={1} style={{ marginBottom: "10px" }}>
         <Box sx={{ textAlign: "center" }}>
           <DragIndicator
             sx={{ transform: "rotate(-90deg)", cursor: "all-scroll" }}
@@ -30,11 +30,10 @@ const TextFieldInput = ({ item, handleValue, deleteEl, handleElType }) => {
             <Grid item xs={9}>
               <TextField
                 value={item.value}
-                variant="outlined"
+                label="Enter Question"
                 onChange={(e) => handleValue(item.id, e)}
                 fullWidth
                 required={item.required}
-                placeholder="Textfield Label"
                 sx={{ mb: 2 }}
               />
             </Grid>

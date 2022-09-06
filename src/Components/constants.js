@@ -1,10 +1,10 @@
 export const formEl = [
   {
-    label: "Text",
-    value: "text",
+    label: "Subjective",
+    value: "SUBJECTIVE",
   },
   {
-    label: "Radio",
-    value: "radio",
+    label: "Objective",
+    value: "OBJECTIVE",
   },
 ];

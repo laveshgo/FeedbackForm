@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Header from "./header";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import {  Link, Navigate , Routes,Route,useNavigate} from "react-router-dom";
+import { Link, Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import "./dashboard.css";
 import withRouter from "./withRouter.jsx";
 import FillResponse from "./FillResponse";
-import ViewResponses from './ViewResponses.jsx'
+import ViewResponses from "./ViewResponses.jsx";
+import { Grid } from "@mui/material";
 
 class Dashbaord extends Component {
   constructor(props) {
@@ -43,14 +44,18 @@ class Dashbaord extends Component {
       <>
         <Header />
 
-        <div>
-          <h1>Hello User</h1>
-          <Button variant="primary">
-            <Link className="link" to={"/create-form?user_id=" + "5"}>
-              Create a Form
-            </Link>
-          </Button>
-        </div>
+        <Grid container style={{ paddingTop: "20px", alignItems: "center" }}>
+          <Grid item xs={6} style={{ paddingLeft: "50px" }}>
+            <h1>Hello User</h1>
+          </Grid>
+          <Grid item xs={6} style={{ paddingLeft: "50px" }}>
+            <Button variant="primary" size="lg">
+              <Link className="link" to={"/create-form?user_id=" + "5"}>
+                Create a Form
+              </Link>
+            </Button>
+          </Grid>
+        </Grid>
         <div>
           <div className="float-child">
             <h2>Forms Created by You</h2>
@@ -68,7 +73,10 @@ class Dashbaord extends Component {
                   <tr key={formByYou.id}>
                     <td>{formByYou.description}</td>
                     <td>
-                      <Button variant="primary" href={"./view-responses?form_id="+formByYou.id} >
+                      <Button
+                        variant="primary"
+                        href={"./view-responses?form_id=" + formByYou.id}
+                      >
                         {formByYou.status}
                       </Button>{" "}
                     </td>
@@ -98,7 +106,12 @@ class Dashbaord extends Component {
                           key={index}
                           variant="success"
                           onClick={() => this.fillResponse(formForYou)}
-                          href={"/your-responses?user_id=" +  formForYou.id + "&form_id=" + formForYou.id }
+                          href={
+                            "/your-responses?user_id=" +
+                            formForYou.id +
+                            "&form_id=" +
+                            formForYou.id
+                          }
                         >
                           View Response
                         </Button>{" "}
@@ -112,7 +125,12 @@ class Dashbaord extends Component {
                           key={index}
                           variant="primary"
                           onClick={() => this.fillResponse(formForYou)}
-                          href={"/fill-response?user_id=" +  formForYou.id + "&form_id=" + formForYou.id }
+                          href={
+                            "/fill-response?user_id=" +
+                            formForYou.id +
+                            "&form_id=" +
+                            formForYou.id
+                          }
                         >
                           Fill Response
                         </Button>{" "}
