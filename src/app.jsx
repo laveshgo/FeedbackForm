@@ -23,7 +23,7 @@ class App extends Component {
             <Route exact path="/dashboard" element={<Dashbaord />} />
             <Route exact path="/create-form" element={<CreateForm />} />
             <Route exact path="/fill-response" element={<FillResponse />} />
-            <Route exact path="/view-responses" element={<ViewResponses />} />
+            <Route exact path="/viewreport" element={<ViewResponses />} />
             <Route exact path="/your-responses" element={<YourResponses />} />
             <Route exact path="/" element={<Navigate replace to="/login" />} />
           </Routes>

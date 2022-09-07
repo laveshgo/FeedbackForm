@@ -18,7 +18,7 @@ function CreateForm() {
   const query = useQuery();
   const user_id = query.get("user_id") || "";
 
-  const url = "https://6312412eb466aa9b0387361b.mockapi.io/qanda";
+  const url = "/createform?id=" + user_id;
 
   const [formName, setFormName] = useState("");
   const [data, setData] = useState([]);
@@ -128,11 +128,14 @@ function CreateForm() {
   function handleSubmit(e) {
     e.preventDefault();
     passData();
-
-    axios.post(url, {
-      name: formName,
-      questions: postData,
-    });
+    axios
+      .post(url, {
+        name: formName,
+        questions: postData,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
     navigate("/dashboard");
   }
 

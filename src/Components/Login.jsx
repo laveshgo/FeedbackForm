@@ -36,7 +36,7 @@ class Login extends Component {
   loginClicked() {
     if (this.state.id === "xyz@gmail.com" && this.state.pass === "xyz") {
       console.log(this.state);
-      this.props.navigate("/dashboard");
+      this.props.navigate("/dashboard?id=1");
 
       this.setState({ showSuccessMessage: true, hasLoginFailed: false });
     } else {
