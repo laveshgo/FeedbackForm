@@ -3,6 +3,7 @@ import { Button, Form, Card } from "react-bootstrap";
 import Logo from "../Images/Logo.png";
 import withRouter from "./withRouter.jsx";
 import "./Login.css";
+import AuthenticationService from "./AuthenticationService.js";
 
 class Login extends Component {
   constructor(props) {
@@ -14,8 +15,6 @@ class Login extends Component {
       showSuccessMessage: false,
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleUsernameChange=this.handleUsernameChange.bind(this)
-
     this.loginClicked = this.loginClicked.bind(this);
   }
 
@@ -26,16 +25,10 @@ class Login extends Component {
     });
   }
 
-  // handleUsernameChange(event){
-  //     this.setState({
-  //         id:event.target.value
-  //     })
-  //     console.log(this.state)
-  // }
-
   loginClicked() {
-    if (this.state.id === "xyz@gmail.com" && this.state.pass === "xyz") {
+    if (this.state.id === "srishtitoora@gmail.com" && this.state.pass === "xyz") {
       console.log(this.state);
+      AuthenticationService.registerSuccessfulLogin(this.state.id,this.state.pass)
       this.props.navigate("/dashboard");
 
       this.setState({ showSuccessMessage: true, hasLoginFailed: false });
