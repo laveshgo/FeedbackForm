@@ -7,85 +7,82 @@ import axios from "axios";
 
 function YourResponses() {
   const query = useQuery();
-  const user_id = query.get("user_id") || "";
-  const form_id = query.get("form_id") || "";
+  const response_id = query.get("response_id") || "";
 
-  // const url1 =
-  //   "/viewresponse?response_id=65";
+  const url1 =
+    "/viewresponse?response_id="+response_id;
 
-  // const [Questions, setQuestions] = useState(null);
-  // const [error, setError] = useState(null);
+  const [Questions, setQuestions] = useState(null);
+  const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(url1)
-  //     .then((response) => {
-  //       setQuestions(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error);
-  //     });
+  useEffect(() => {
+    axios
+      .get(url1)
+      .then((response) => {
+        setQuestions(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
 
-  // }, [url1]);
+  }, [url1]);
 
-  // if (error) return `Error: ${error.message}`;
+  if (error) return `Error: ${error.message}`;
 
-  // if (!Questions ) return null;
+  if (!Questions ) return null;
 
-  let Questions = [
-    {
-      question_id: 59,
-      answer: "Motam Shiva Teja",
-      options: [],
-      questionType: "SUBJECTIVE",
-      questionText: "What is your name?",
-    },
-    {
-      question_id: 60,
-      answer: "Dhanush",
-      options: [],
-      questionType: "SUBJECTIVE",
-      questionText: "What is your Supervisor's Name?",
-    },
-    {
-      question_id: 61,
-      answer: "Slightly",
-      options: ["Not at all", "Slightly", "Moderately", "Extremely"],
-      questionType: "OBJECTIVE",
-      questionText: "Do you prefer working at the office instead??",
-    },
-    {
-      question_id: 62,
-      answer: "Not at all",
-      options: ["Not at all", "Slightly", "Moderately", "Extremely"],
-      questionType: "OBJECTIVE",
-      questionText: "Do you recommend remote working to your friends?",
-    },
-    {
-      question_id: 63,
-      answer: "Moderately",
-      options: ["Not at all", "Slightly", "Moderately", "Extremely"],
-      questionType: "OBJECTIVE",
-      questionText: "Do you think remote working has affected you positively?",
-    },
-    {
-      question_id: 64,
-      answer: "1 year",
-      options: [
-        "Less than 1 month",
-        "1-6 months",
-        "1 year",
-        "More than 1 year",
-      ],
-      questionType: "OBJECTIVE",
-      questionText: "How long do you work remotely?",
-    },
-  ];
+  // let Questions = [
+  //   {
+  //     question_id: 59,
+  //     answer: "Motam Shiva Teja",
+  //     options: [],
+  //     questionType: "SUBJECTIVE",
+  //     questionText: "What is your name?",
+  //   },
+  //   {
+  //     question_id: 60,
+  //     answer: "Dhanush",
+  //     options: [],
+  //     questionType: "SUBJECTIVE",
+  //     questionText: "What is your Supervisor's Name?",
+  //   },
+  //   {
+  //     question_id: 61,
+  //     answer: "Slightly",
+  //     options: ["Not at all", "Slightly", "Moderately", "Extremely"],
+  //     questionType: "OBJECTIVE",
+  //     questionText: "Do you prefer working at the office instead??",
+  //   },
+  //   {
+  //     question_id: 62,
+  //     answer: "Not at all",
+  //     options: ["Not at all", "Slightly", "Moderately", "Extremely"],
+  //     questionType: "OBJECTIVE",
+  //     questionText: "Do you recommend remote working to your friends?",
+  //   },
+  //   {
+  //     question_id: 63,
+  //     answer: "Moderately",
+  //     options: ["Not at all", "Slightly", "Moderately", "Extremely"],
+  //     questionType: "OBJECTIVE",
+  //     questionText: "Do you think remote working has affected you positively?",
+  //   },
+  //   {
+  //     question_id: 64,
+  //     answer: "1 year",
+  //     options: [
+  //       "Less than 1 month",
+  //       "1-6 months",
+  //       "1 year",
+  //       "More than 1 year",
+  //     ],
+  //     questionType: "OBJECTIVE",
+  //     questionText: "How long do you work remotely?",
+  //   },
+  // ];
 
   return (
     <>
-      {console.log("userID = " + user_id + " formID = " + form_id)}
-      {console.log(Questions)}
       <div id="form-create">
         <Header />
         <div className="h1-div">
