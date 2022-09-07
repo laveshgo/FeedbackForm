@@ -12,6 +12,8 @@ import Dashbaord from "./Components/dashboard";
 import CreateForm from "./Components/createform";
 import ViewResponses from "./Components/ViewResponses.jsx";
 import YourResponses from "./Components/YourResponses.jsx";
+import AuthenticationService from "./Components/AuthenticationService.js";
+import AuthenticatedRoute from "./Components/AuthenticatedRoute.jsx";
 
 class App extends Component {
   render() {
@@ -20,11 +22,11 @@ class App extends Component {
         <>
           <Routes>
             <Route exact path="/login" element={<LoginComponent />} />
-            <Route exact path="/dashboard" element={<Dashbaord />} />
-            <Route exact path="/create-form" element={<CreateForm />} />
-            <Route exact path="/fill-response" element={<FillResponse />} />
-            <Route exact path="/viewreport" element={<ViewResponses />} />
-            <Route exact path="/your-responses" element={<YourResponses />} />
+            <Route exact path="/dashboard" element={<AuthenticatedRoute><Dashbaord /></AuthenticatedRoute>} />
+            <Route exact path="/create-form" element={<AuthenticatedRoute><CreateForm /></AuthenticatedRoute>} />
+            <Route exact path="/fill-response" element={<AuthenticatedRoute><FillResponse /></AuthenticatedRoute>} />
+            <Route exact path="/viewreport" element={<AuthenticatedRoute><ViewResponses /></AuthenticatedRoute>} />
+            <Route exact path="/your-responses" element={<AuthenticatedRoute><YourResponses /></AuthenticatedRoute>} />
             <Route exact path="/" element={<Navigate replace to="/login" />} />
           </Routes>
         </>
