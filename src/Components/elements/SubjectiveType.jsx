@@ -11,6 +11,7 @@ const SubjectiveType = ({ ques, Answers, id, handleChange }) => {
           label="Enter Answer"
           onChange={(e) => handleChange(e.target.value, id)}
           fullWidth
+          inputProps={{ maxLength: 240 }}
           sx={{ mb: 2 }}
         />
       </Form.Group>

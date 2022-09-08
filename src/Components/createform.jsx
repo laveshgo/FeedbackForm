@@ -3,13 +3,12 @@ import Header from "./header";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import "./createform.css";
-import { Grid, IconButton, Tooltip } from "@mui/material";
+import { Grid } from "@mui/material";
 import Nestable from "react-nestable";
 import uuid from "react-uuid";
 import TextFieldInput from "./elements/TextField";
 import RadioInput from "./elements/Radioinput";
 import { formEl } from "./constants";
-import { AddCircleOutlineOutlined } from "@mui/icons-material";
 import useQuery from "./useQuery";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -83,7 +82,7 @@ function CreateForm() {
     setData(items);
   };
 
-  const renderElements = ({ item }) => {
+  const renderElements = ({ item, index }) => {
     switch (item.type) {
       case "SUBJECTIVE":
         return (
@@ -92,6 +91,8 @@ function CreateForm() {
             handleValue={handleValue}
             deleteEl={deleteEl}
             handleElType={handleElType}
+            addElement={addElement}
+            isLast={index === data.length - 1}
           />
         );
       case "OBJECTIVE":
@@ -102,6 +103,8 @@ function CreateForm() {
             deleteEl={deleteEl}
             handleElType={handleElType}
             handleOptionValues={handleOptionValues}
+            addElement={addElement}
+            isLast={index === data.length - 1}
           />
         );
       default:
@@ -134,16 +137,14 @@ function CreateForm() {
         name: formName,
         questions: postData,
       })
-      .then((res) => {
-        console.log(res.data);
-      });
+      .then((res) => {});
 
-    navigate("/dashboard/="+user_id);
+    navigate("/dashboard/=" + user_id);
   }
 
   return (
     <div id="form-create">
-      <Header />
+      <Header user_id={user_id} />
       <div className="h1-div">
         <h1>Create Form</h1>
       </div>
@@ -155,6 +156,7 @@ function CreateForm() {
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
               required
+              maxLength="240"
               placeholder="Enter name"
             />
           </Form.Group>
@@ -167,7 +169,7 @@ function CreateForm() {
         </div>
         <Form.Group required>
           <Grid container spacing={1} direction="row" justifyContent="center">
-            <Grid item md={6}>
+            <Grid item md={6.5}>
               <Nestable
                 items={items}
                 renderItem={renderElements}
@@ -176,7 +178,7 @@ function CreateForm() {
               />
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Tooltip title="Add Element" aria-label="add-element">
                 {data.length > 0 ? (
                   <IconButton
@@ -189,8 +191,8 @@ function CreateForm() {
                 ) : (
                   <></>
                 )}
-              </Tooltip>
-            </Grid>
+              </Tooltip> */}
+            {/* </Grid> */}
           </Grid>
         </Form.Group>
         <div className="form-details">

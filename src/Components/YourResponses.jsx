@@ -8,9 +8,9 @@ import axios from "axios";
 function YourResponses() {
   const query = useQuery();
   const response_id = query.get("response_id") || "";
+  const user_id = query.get("user_id") || "";
 
-  const url1 =
-    "/viewresponse?response_id="+response_id;
+  const url1 = "/viewresponse?response_id=" + response_id;
 
   const [Questions, setQuestions] = useState(null);
   const [error, setError] = useState(null);
@@ -24,12 +24,11 @@ function YourResponses() {
       .catch((error) => {
         setError(error);
       });
-
   }, [url1]);
 
   if (error) return `Error: ${error.message}`;
 
-  if (!Questions ) return null;
+  if (!Questions) return null;
 
   // let Questions = [
   //   {
@@ -84,7 +83,7 @@ function YourResponses() {
   return (
     <>
       <div id="form-create">
-        <Header />
+        <Header user_id={user_id} />
         <div className="h1-div">
           <h1>Your Responses</h1>
         </div>
@@ -96,10 +95,10 @@ function YourResponses() {
           justifyContent="center"
           style={{ paddingBottom: "100px" }}
         >
-          {Questions.map((que) => {
+          {Questions.map((que, index) => {
             if (que.questionType === "SUBJECTIVE")
               return (
-                <Grid item md={8} key={que.id}>
+                <Grid item md={8} key={index}>
                   <Paper elevation={1}>
                     <Box sx={{ p: 3 }}>
                       <Grid container spacing={1}>
@@ -126,7 +125,7 @@ function YourResponses() {
               );
             else
               return (
-                <Grid item md={8} key={que.id}>
+                <Grid item md={8} key={index}>
                   <Paper elevation={1}>
                     <Box sx={{ p: 3 }}>
                       <Grid container spacing={1}>
@@ -141,16 +140,16 @@ function YourResponses() {
                             <span style={{ fontWeight: "bold" }}>Answer: </span>
 
                             <ul>
-                              {que.options.map((item) => {
+                              {que.options.map((item, index) => {
                                 if (item === que.answer)
                                   return (
-                                    <p key={item.id}>
+                                    <p key={index}>
                                       <RadioButtonChecked /> {item}
                                     </p>
                                   );
                                 else
                                   return (
-                                    <p key={item.id}>
+                                    <p key={index}>
                                       <RadioButtonUnchecked /> {item}
                                     </p>
                                   );
