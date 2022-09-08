@@ -6,6 +6,7 @@ import "./Login.css";
 import AuthenticationService from "./AuthenticationService.js";
 import axios from "axios";
 
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,7 @@ class Login extends Component {
       user_id: -1,
       email: "",
       allUsers: [],
+
       hasLoginFailed: false,
       showSuccessMessage: false,
     };
@@ -29,6 +31,7 @@ class Login extends Component {
   }
 
   loginClicked() {
+
     axios
       .post("/login", {
         email: this.state.id,
@@ -49,6 +52,7 @@ class Login extends Component {
 
   success(user_id) {
     this.props.navigate(`/dashboard/${user_id}`);
+
   }
 
   render() {
