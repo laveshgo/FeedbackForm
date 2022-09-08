@@ -15,7 +15,7 @@ class Dashbaord extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: 4,
+      user_id: -1,
       createdByUser:[],
       filledByUser:[],
       notFilledByUser: [],
@@ -37,13 +37,16 @@ class Dashbaord extends Component {
     }
 
   refreshPage(){
+    this.setState({user_id:this.props.params.userid})
+
     DataService.dashboardCreatedByForms(this.state.user_id)
     .then((response) => {
      console.log(response.data);
       this.setState({createdByUser : response.data.createdByUser,
                      notFilledByUser: response.data.notFilledByUser,
-                    filledByUser: response.data.filledByUser
+                    filledByUser: response.data.filledByUser,
       })
+      console.log(this.state);
     })
   }
 
@@ -90,7 +93,7 @@ class Dashbaord extends Component {
         </Grid>
         <div>
           <div className="float-child">
-            <h2>Forms Created by You</h2>
+            <h2>Forms Created by You {this.props.params.user_id}</h2>
             <hr className="hr-css" />
 
 

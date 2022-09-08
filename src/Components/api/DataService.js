@@ -15,6 +15,12 @@ class DataService {
         return axios.get(`http://localhost:5050/viewresponse?response_id=${response_id}`)
     }
 
+    allUsers (){
+        return axios.get(`http://localhost:5050/users`)
+    }
+
+    
+
     
 }
 
