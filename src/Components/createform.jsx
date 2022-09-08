@@ -128,6 +128,7 @@ function CreateForm() {
   function handleSubmit(e) {
     e.preventDefault();
     passData();
+
     axios
       .post(url, {
         name: formName,
@@ -136,7 +137,8 @@ function CreateForm() {
       .then((res) => {
         console.log(res.data);
       });
-    navigate("/dashboard");
+
+    navigate("/dashboard/="+user_id);
   }
 
   return (

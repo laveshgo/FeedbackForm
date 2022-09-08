@@ -10,6 +10,7 @@ import {
 import { Box } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
 import Header from "./header";
 import useQuery from "./useQuery";
 
@@ -18,7 +19,7 @@ function ViewResponses() {
   const form_id = query.get("form_id") || "";
   // const url1 = "https://6312412eb466aa9b0387361b.mockapi.io/report";
 
-  const url1 = "/viewreport?form_id="+form_id;
+  const url1 = "/viewreport?form_id=" + form_id;
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -45,6 +46,30 @@ function ViewResponses() {
         <div className="h1-div">
           <h1>View Form Results</h1>
         </div>
+
+    
+        <Table striped hover bordered>
+          <thead>
+            <tr>
+              <th>~</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Total Users</td>
+              <td>{data.allUser}</td>
+            </tr>
+            <tr>
+              <td>Filled By</td>
+              <td>{data.respondedUser}</td>
+            </tr>
+            <tr>
+              <td>Remaining Users</td>
+              <td>{data.allUser - data.respondedUser}</td>
+            </tr>
+          </tbody>
+        </Table>
 
         <div className="accordion-style">
           {data.sendResponse.map((el) => {

@@ -6,22 +6,23 @@ import Button from "react-bootstrap/Button";
 import "./header.css";
 import AuthenticationService from "./AuthenticationService.js";
 
-
 function Header() {
   return (
     <Navbar className="color-navbar" expand="lg">
       <Container>
-        <Navbar.Brand href="/dashboard">
+        <Navbar.Brand href="/dashboard/${user_id}">
           <img alt="" src={Logo} width="10%" />{" "}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="./dashboard">
+            <Nav.Link href={"./dashboard"}>
               <Button variant="primary">Home</Button>
             </Nav.Link>
-            <Nav.Link href='./login'>
-              <Button onClick={AuthenticationService.logout} variant="primary">LogOut</Button>
+            <Nav.Link href="./login">
+              <Button onClick={AuthenticationService.logout} variant="primary">
+                LogOut
+              </Button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
@@ -31,4 +32,3 @@ function Header() {
 }
 
 export default Header;
- 
