@@ -4,7 +4,8 @@ class DataService {
 
     dashboardCreatedByForms (user_id){
         // console.log("created by formss");
-        return axios.get(`http://localhost:5050/profilepage?user_id=${user_id}`)
+        console.log(user_id)
+        return axios.get(`/profilepage?user_id=${user_id}`)
     }
 
     viewResult (form_id){
@@ -14,6 +15,15 @@ class DataService {
     viewResponse (response_id){
         return axios.get(`http://localhost:5050/viewresponse?response_id=${response_id}`)
     }
+
+    allUsers (){
+        return axios.get(`/users`)
+    }
+    
+    login (){
+        return axios.post('/login')
+    }
+    
 
     
 }

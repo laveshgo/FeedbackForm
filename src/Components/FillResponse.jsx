@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./header";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import useQuery from "./useQuery";
 import axios from "axios";
 import { TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import SubjectiveType from "./elements/SubjectiveType";
+import ObjectiveType from "./elements/ObjectiveType";
 
 function FillResponse() {
   const query = useQuery();
@@ -79,57 +82,36 @@ function FillResponse() {
   //     },
   //   ],
   // };
-  const [Answers, setAnswers] = useState([]);
 
-  const handleSubjectiveChange = (qid, e) => {
-    let newArr = Answers.map((el) => {
-      if (el.id === qid) {
-        return { ...el, value: e.target.value };
-      } else {
-        return el;
-      }
-    });
-    setAnswers(newArr);
-  };
-  const addElement = (qid) => {
-    Answers.push({ id: qid, value: "" });
-  };
+  const [Answers, setAnswers] = useState({});
 
-  function SubjectiveType(props) {
-    addElement(props.id);
-    return (
-      <Form.Group>
-        <Form.Label>{props.value}</Form.Label>
+  const handleChange = useCallback(
+    (value, id) => {
+      setAnswers({
+        ...Answers,
+        [id]: { id: id, responseText : value },
+      });
+    },
+    [Answers]
+  );
 
-        <TextField
-          value={Answers[props.index].value}
-          label="Enter Question"
-          onChange={(e) => handleSubjectiveChange(props.id, e)}
-          fullWidth
-          sx={{ mb: 2 }}
-        />
-      </Form.Group>
-    );
-  }
-  function ObjectiveType(props) {
-    addElement(props.id);
-    return (
-      <Form.Group>
-        <Form.Label className="questionData">{props.value}</Form.Label>
+  const navigate = useNavigate();
 
-        {props.options.map((opt) => {
-          return (
-            <Form.Label className="form-control">
-              <Form.Check inline label={opt} name="group1" type="radio" />
-            </Form.Label>
-          );
-        })}
-      </Form.Group>
-    );
-  }
+  const posturl = "/submitform?user_id=" + user_id + "&form_id=" + form_id;
 
+  // const posturl ="https://6312412eb466aa9b0387361b.mockapi.io/report"
+  
   function handleSubmit(e) {
     e.preventDefault();
+
+    axios
+      .post(posturl, {
+        questionAnswers: Object.values(Answers),
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+    navigate("/dashboard/" + user_id);
   }
 
   if (error) return `Error: ${error.message}`;
@@ -150,15 +132,23 @@ function FillResponse() {
             {data.questions.map((que, index) => {
               if (que.quetionType === "SUBJECTIVE")
                 return (
-                  <SubjectiveType index={index} value={que.text} id={que.id} />
+                  <SubjectiveType
+                    key={index}
+                    ques={que.text}
+                    Answers={Answers}
+                    id={que.id}
+                    handleChange={handleChange}
+                  />
                 );
               else
                 return (
                   <ObjectiveType
-                    value={que.text}
-                    key={que.id}
+                    key={index}
+                    ques={que.text}
+                    answer={que.answers}
+                    Answers={Answers}
                     id={que.id}
-                    options={que.answers}
+                    handleChange={handleChange}
                   />
                 );
             })}
