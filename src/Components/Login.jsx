@@ -4,8 +4,6 @@ import Logo from "../Images/Logo.png";
 import withRouter from "./withRouter.jsx";
 import "./Login.css";
 import AuthenticationService from "./AuthenticationService.js";
-import DataService from "./api/DataService";
-import usePagination from "@mui/material/usePagination/usePagination";
 import axios from "axios";
 
 class Login extends Component {
@@ -31,25 +29,12 @@ class Login extends Component {
   }
 
   loginClicked() {
-    // Niche wale DataService.allUsers wale api se response
-    // aya which is al users ka database.
-    // maine us response k saare email id ka alag array bnaya
-    // and ids ka alag and map krke equate ki condition se
-    // "ind" variable mei index store krlia id ka
-    // fir jo login wale input mei email id enter hui hai uspe
-    // condition lagayi and agar vo dono equal hain toh success method
-    // call krdia with a parameter. Ab vo paramater hume dashboard
-    // mei jake dashboard k state k variable mei store krlena hai
-    // jahan maine hard code krke 4 set kia hua hai
-    // Baaki sab sahi chalra hai
-
     axios
       .post("/login", {
         email: this.state.id,
         password: this.state.pass,
       })
       .then((response) => {
-        console.log(response.data);
         AuthenticationService.registerSuccessfulLogin(
           this.state.id,
           this.state.pass
@@ -60,67 +45,10 @@ class Login extends Component {
       .catch((error) =>
         this.setState({ hasLoginFailed: true, showSuccessMessage: false })
       );
-
-  //   DataService.allUsers().then((response) => {
-  //     console.log(response.data);
-  //     // this.setState({allUsers:response.data})
-  //     // console.log(this.state.allUsers);
-
-  //     const one = response.data.map((item) => item.email);
-  //     const two = response.data.map((item) => item.id);
-  //     var ind;
-  //     one.forEach((value, i) => {
-  //       if (value === this.state.id) {
-  //         ind = i;
-  //         // this.setState({user_id:response.data[i].id})
-  //       }
-  //     });
-  //     // console.log(ind);
-  //     // console.log(one[ind]);
-  //     // console.log(two[ind]);
-
-  //     if (this.state.id === one[ind]) {
-  //       // console.log(one[ind]);
-  //       AuthenticationService.registerSuccessfulLogin(
-  //         this.state.id,
-  //         this.state.pass
-  //       );
-
-  //       this.success(two[ind]);
-  //     } else {
-  //       console.log("failed");
-  //       this.setState({ hasLoginFailed: true, showSuccessMessage: false });
-  //     }
-  //     // this.setState({user_id:two[ind]})
-  //     // this.setState({user_id: response.data[ind]})
-  //     // console.log(this.state.user_id);
-  //     // this.setState({user_id:response.data[ind].id})
-  //     // console.log(this.state.user_id);
-  //   });
-
-  //   if (
-  //     this.state.id === "srishtitoora@gmail.com" &&
-  //     this.state.pass === "xyz"
-  //   ) {
-  //     console.log(this.state);
-  //     AuthenticationService.registerSuccessfulLogin(
-  //       this.state.id,
-  //       this.state.pass
-  //     );
-  //     this.props.navigate("/dashboard");
-
-  //     this.setState({ showSuccessMessage: true, hasLoginFailed: false });
-  //   } else {
-  //     this.setState({ hasLoginFailed: true, showSuccessMessage: false });
-  //     console.log(this.state);
-  //   }
   }
 
   success(user_id) {
     this.props.navigate(`/dashboard/${user_id}`);
-
-    // this.setState({user_id:p})
-    // console.log(this.state.user_id);
   }
 
   render() {

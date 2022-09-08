@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import useQuery from "./useQuery";
 import axios from "axios";
-import { TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import SubjectiveType from "./elements/SubjectiveType";
 import ObjectiveType from "./elements/ObjectiveType";
@@ -89,7 +88,7 @@ function FillResponse() {
     (value, id) => {
       setAnswers({
         ...Answers,
-        [id]: { id: id, responseText : value },
+        [id]: { id: id, responseText: value },
       });
     },
     [Answers]
@@ -99,8 +98,6 @@ function FillResponse() {
 
   const posturl = "/submitform?user_id=" + user_id + "&form_id=" + form_id;
 
-  // const posturl ="https://6312412eb466aa9b0387361b.mockapi.io/report"
-  
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -108,9 +105,7 @@ function FillResponse() {
       .post(posturl, {
         questionAnswers: Object.values(Answers),
       })
-      .then((res) => {
-        console.log(res.data);
-      });
+      .then((res) => {});
     navigate("/dashboard/" + user_id);
   }
 
@@ -120,7 +115,7 @@ function FillResponse() {
   return (
     <div>
       <div id="form-create">
-        <Header />
+        <Header user_id={user_id} />
         <div className="h1-div">
           <h1>Fill Form</h1>
         </div>

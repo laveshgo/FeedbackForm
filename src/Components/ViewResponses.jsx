@@ -17,7 +17,7 @@ import useQuery from "./useQuery";
 function ViewResponses() {
   const query = useQuery();
   const form_id = query.get("form_id") || "";
-  // const url1 = "https://6312412eb466aa9b0387361b.mockapi.io/report";
+  const user_id = query.get("user_id") || "";
 
   const url1 = "/viewreport?form_id=" + form_id;
 
@@ -42,17 +42,16 @@ function ViewResponses() {
   return (
     <div>
       <div id="form-create">
-        <Header />
+        <Header user_id={user_id} />
         <div className="h1-div">
           <h1>View Form Results</h1>
         </div>
 
-    
-        <Table striped hover bordered>
+        <Table striped hover bordered style={{ width: "50%", margin: "auto" }}>
           <thead>
             <tr>
-              <th>~</th>
-              <th>#</th>
+              <th>Description</th>
+              <th>Numbers</th>
             </tr>
           </thead>
           <tbody>
@@ -72,9 +71,9 @@ function ViewResponses() {
         </Table>
 
         <div className="accordion-style">
-          {data.sendResponse.map((el) => {
+          {data.sendResponse.map((el, index) => {
             return (
-              <Accordion style={{ marginBottom: "20px" }}>
+              <Accordion key={index} style={{ marginBottom: "20px" }}>
                 <AccordionSummary
                   expandIcon={<ExpandMore />}
                   aria-controls="panel1a-content"
@@ -89,13 +88,12 @@ function ViewResponses() {
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {el.questionAnswers.map((e) => {
+                  {el.questionAnswers.map((e, index) => {
                     return (
-                      <Grid item md={8}>
+                      <Grid key={index} item md={8}>
                         <Paper
                           elevation={1}
                           style={{
-                            // border: "2px solid #ef2a26",
                             marginBottom: "10px",
                           }}
                         >
