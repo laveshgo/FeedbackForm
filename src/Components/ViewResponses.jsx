@@ -38,7 +38,8 @@ function ViewResponses() {
   if (error) return `Error: ${error.message}`;
 
   if (!data) return null;
-
+  const percentt = (data.respondedUser * 100) / data.allUser;
+  const percent = percentt.toFixed(2);
   return (
     <div>
       <div id="form-create">
@@ -66,6 +67,10 @@ function ViewResponses() {
             <tr>
               <td>Remaining Users</td>
               <td>{data.allUser - data.respondedUser}</td>
+            </tr>
+            <tr>
+              <td>Percentage Users</td>
+              <td>{percent}</td>
             </tr>
           </tbody>
         </Table>

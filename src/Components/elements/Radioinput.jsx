@@ -41,6 +41,8 @@ const RadioInput = ({
                     label="Enter Question"
                     onChange={(e) => handleValue(item.id, e)}
                     fullWidth
+                    multiline
+                    inputProps={{ maxLength: 1000 }}
                     required={item.required}
                     sx={{ mb: 2 }}
                   />
@@ -54,6 +56,8 @@ const RadioInput = ({
                           defaultValue={opt?.value}
                           required={item.required}
                           sx={{ mb: 1 }}
+                          multiline
+                          inputProps={{ maxLength: 100 }}
                           onBlur={(e) =>
                             handleOptionValues(
                               item?.id,

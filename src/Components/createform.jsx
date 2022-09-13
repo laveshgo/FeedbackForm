@@ -139,7 +139,7 @@ function CreateForm() {
       })
       .then((res) => {});
 
-    navigate("/dashboard/=" + user_id);
+    navigate("/dashboard/" + user_id);
   }
 
   return (
@@ -156,7 +156,7 @@ function CreateForm() {
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
               required
-              maxLength="240"
+              maxLength="100"
               placeholder="Enter name"
             />
           </Form.Group>
