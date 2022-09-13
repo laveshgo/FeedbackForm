@@ -3,8 +3,11 @@ import { Form } from "react-bootstrap";
 const ObjectiveType = ({ ques, answer, Answers, id, handleChange }) => {
   return (
     <>
-      <Form.Group>
-        <Form.Label>{ques}</Form.Label>
+      <Form.Group style={{ margin: "20px auto" }}>
+        <Form.Label>
+          {" "}
+          <span style={{ fontWeight: "bold" }}>Question: </span> {ques}
+        </Form.Label>{" "}
         <Form.Select
           aria-label="Default select example"
           onChange={(e) => handleChange(e.target.value, id)}

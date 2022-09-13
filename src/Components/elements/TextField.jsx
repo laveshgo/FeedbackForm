@@ -41,7 +41,7 @@ const TextFieldInput = ({
                     onChange={(e) => handleValue(item.id, e)}
                     fullWidth
                     multiline
-                    inputProps={{ maxLength: 240 }}
+                    inputProps={{ maxLength: 1000 }}
                     sx={{ mb: 2 }}
                   />
                 </Grid>

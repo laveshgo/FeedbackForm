@@ -13,9 +13,11 @@ class Dashbaord extends Component {
     super(props);
     this.state = {
       user_id: this.props.params.userid,
+      name: "",
       createdByUser: [],
       filledByUser: [],
       notFilledByUser: [],
+      allUsers: [],
     };
   }
 
@@ -24,11 +26,22 @@ class Dashbaord extends Component {
   }
 
   refreshPage() {
+    DataService.allUsers().then((response) => {
+      this.setState({
+        allUsers: response.data,
+      });
+    });
     DataService.dashboardCreatedByForms(this.state.user_id).then((response) => {
       this.setState({
         createdByUser: response.data.createdByUser,
         notFilledByUser: response.data.notFilledByUser,
         filledByUser: response.data.filledByUser,
+      });
+
+      this.state.allUsers.map((user) => {
+        if (user.id == this.state.user_id)
+          return this.setState({ name: user.name });
+        return null;
       });
     });
   }
@@ -40,7 +53,7 @@ class Dashbaord extends Component {
 
         <Grid container style={{ paddingTop: "20px", alignItems: "center" }}>
           <Grid item xs={6} style={{ paddingLeft: "20px" }}>
-            <h1>Hello User </h1>
+            <h2 style={{ fontWeight: "bold" }}>Hello {this.state.name} </h2>
           </Grid>
           <Grid item xs={6} style={{ paddingLeft: "20px" }}>
             <Button variant="primary" size="lg">

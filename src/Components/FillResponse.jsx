@@ -148,7 +148,11 @@ function FillResponse() {
                 );
             })}
 
-            <Button variant="primary" type="submit">
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ margin: "30px auto" }}
+            >
               Submit
             </Button>
           </Form>

@@ -6,7 +6,6 @@ import "./Login.css";
 import AuthenticationService from "./AuthenticationService.js";
 import axios from "axios";
 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +30,6 @@ class Login extends Component {
   }
 
   loginClicked() {
-
     axios
       .post("/login", {
         email: this.state.id,
@@ -42,17 +40,15 @@ class Login extends Component {
           this.state.id,
           this.state.pass
         );
-
-        this.success(response.data.id);
+        this.success(response.data);
       })
       .catch((error) =>
         this.setState({ hasLoginFailed: true, showSuccessMessage: false })
       );
   }
 
-  success(user_id) {
-    this.props.navigate(`/dashboard/${user_id}`);
-
+  success(data) {
+    this.props.navigate("/dashboard/" + data.id, { state: data });
   }
 
   render() {
